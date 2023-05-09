@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone SCM/GITHUB') {
+            steps {
+                echo 'Clone from github'
+                git branch: 'main', credentialsId: 'githug', url: 'https://github.com/srimobile18/jenkinswar.git'
+            }
+        }
+
+        stage('Build artifact') {
+            steps {
+                echo 'Build artifact using Maven'
+                sh 'mvn clean install'
+            }
+        }
+
+        stage('deploy to Tomcat') {
+            steps {
+                echo 'deploying to the tomcat server'
+                deploy adapters: [tomcat9(credentialsId: 'tomcatmyid', path: '', url: 'http://54.173.130.62:8090/')], contextPath: 'myappintomcatserver', war: '**/*.war'
+            }
+        }
+
+        stage('All done') {
+            steps {
+                echo 'Deployment successful - my message'
+            }
+        }
+
+    }
+}

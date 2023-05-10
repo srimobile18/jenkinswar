@@ -5,7 +5,7 @@ pipeline {
         stage('Clone SCM/GITHUB') {
             steps {
                 echo 'Clone from github'
-                git branch: 'main', credentialsId: 'githug', url: 'https://github.com/srimobile18/jenkinswar.git'
+                git branch: 'main', credentialsId: 'githubID', url: 'https://github.com/srimobile18/jenkinswar.git'
             }
         }
 
